@@ -52,17 +52,17 @@ public class Principal {
                 .flatMap(t -> t.episodios().stream())
                 .collect(Collectors.toList());
 
-        System.out.println("===== Top 10 ep =====");
-        dadosEpisodios.stream()
-                .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
-                .peek(e -> System.out.println("Primeiro filtro(N/A) " + e))
-                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
-                .peek(e -> System.out.println("Ordenação " + e))
-                .limit(10)
-                .peek(e -> System.out.println("Limite " + e))
-                .map(e -> e.titulo().toUpperCase())
-                .peek(e -> System.out.println("Mapeamento " + e))
-                .forEach(System.out::println);
+//        System.out.println("===== Top 10 ep =====");
+//        dadosEpisodios.stream()
+//                .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+//                .peek(e -> System.out.println("Primeiro filtro(N/A) " + e))
+//                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
+//                .peek(e -> System.out.println("Ordenação " + e))
+//                .limit(10)
+//                .peek(e -> System.out.println("Limite " + e))
+//                .map(e -> e.titulo().toUpperCase())
+//                .peek(e -> System.out.println("Mapeamento " + e))
+//                .forEach(System.out::println);
 
         System.out.println("\n========== CLASSE EPISODIO ==========");
 
@@ -72,6 +72,18 @@ public class Principal {
                 ).collect(Collectors.toList());
 
         episodios.forEach(System.out::println);
+
+        System.out.println("\nDigite um trecho do episódio");
+        var trehoEpisodio = leitura.nextLine();
+        Optional<Episodio> episodioBuscado = episodios.stream()
+                .filter(e -> e.getTitulo().toUpperCase().contains(trehoEpisodio.toUpperCase()))
+                .findFirst();
+        if (episodioBuscado.isPresent()){
+            System.out.println("Episódio encontrado");
+            System.out.println("temporada: " + episodioBuscado.get().getTemporada());
+        } else {
+            System.out.println("Episódio não encontrado");
+        }
 
         System.out.println("========== FILTRO POR ANO ==========");
         System.out.println("A partir de que ano deseja ver os episodios?");
